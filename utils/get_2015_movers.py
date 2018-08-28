@@ -22,6 +22,8 @@ if not databases_2015:
     print "\nNo databases found. Goodbye!\n"
     sys.exit()
 
+relevant_users = set()
+
 # Loop through 2015 databases
 
 for db_file in databases_2015: 
@@ -30,12 +32,16 @@ for db_file in databases_2015:
     for fips in relevant_counties: 
         results = current_db.select(
             """
-                SELECT user_id, tweet_text, fips, tweet_date 
+                SELECT user_id
                 FROM tweets 
                 WHERE fips={} AND substr(tweet_date, 0, 11) BETWEEN '2015-01-01' AND '2015-06-30'            
             """.format(fips))
 
-        print "One result: ", results.fetchone()
+        for result in results: 
+            if result: 
+                relevant_users.add(result[0])
+
+print "Relevant Users: ", len(relevant_users)
         
 
 
