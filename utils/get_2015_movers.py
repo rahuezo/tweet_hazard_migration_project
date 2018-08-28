@@ -28,7 +28,12 @@ for db_file in databases_2015:
     current_db = Database(db_file)
 
     for fips in relevant_counties: 
-        results = current_db.select("SELECT user_id, tweet_text, fips, tweet_date FROM tweets WHERE fips={}".format(fips))
+        results = current_db.select(
+            """
+                SELECT user_id, tweet_text, fips, tweet_date 
+                FROM tweets 
+                WHERE fips={} AND substr(tweet_date, 0, 11) BETWEEN '2015-01-01' AND '2015-06-30'            
+            """.format(fips))
 
         print "One result: ", results.fetchone()
         
