@@ -1,6 +1,7 @@
 from database import Database
 
 import tkFileDialog as fd
+import cPickle as pk
 import os, csv, sys
 
 
@@ -26,7 +27,11 @@ relevant_users = set()
 
 # Loop through 2015 databases
 
-for db_file in databases_2015: 
+print "\nGrabbing 2015 movers..."
+
+for i, db_file in enumerate(databases_2015): 
+    print "\t{} out of {}".format(i + 1, len(databases_2015))
+
     current_db = Database(db_file)
 
     for fips in relevant_counties: 
@@ -41,8 +46,10 @@ for db_file in databases_2015:
             if result: 
                 relevant_users.add(result[0])
 
-print "Relevant Users: ", len(relevant_users)
-        
+print "\n\tPickling 2015 movers..."
 
+with open('resources/movers_2015.pkl', 'w') as f: 
+    pk.dump(relevant_users, f)
 
-    
+print "\n\tFinished pickling 2015 movers!"
+print "\nFinished grabbing 2015 movers!\n"
