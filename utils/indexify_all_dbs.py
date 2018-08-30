@@ -1,4 +1,4 @@
-from utils.database import Database
+from database import Database
 
 import tkFileDialog as fd
 import time
