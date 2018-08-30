@@ -20,7 +20,7 @@ print "\nGrabbing mover tweet stats..."
 for i, mover_db_file in enumerate(mover_db_files): 
     print "\t{} out of {}".format(i + 1, len(mover_db_files))
 
-    current_db = Database(db_file)
+    current_db = Database(mover_db_file)
 
     results = current_db.select(    
         """
